@@ -39,6 +39,9 @@ runlog mo yyyymm - gives a monthly report for month yyyymm
 runlog h - displays this help message.
 DATES: YYYYMMDD means 4 digit year, 2 digit month, 2 digit day.
 This month is $thismonth, Today is $tday.
+TIMES: At this point, the math isn't here to convert seconds/decimals.
+Either enter full minutes, or use a decimal value (i.e. for 30min45secs, use 30.75, NOT 30:45).
+It's on my todo list...
 -------------------------------------
 runlog is released according to GPL v. 3"
 else
@@ -108,7 +111,7 @@ Average Pace = $avp mins/mile" >> $2.month
 else
 	date=`date`
 	read -p "Distance (miles):  " dist
-	read -p "Time (minutes): " mins
+	read -p "Time (minutes, decimal values ok, no seconds, i.e. 20:45 = 20.75): " mins
 	read -p "Notes: " notes
 	mpm=`echo "$mins / $dist" | bc -l`
 	echo -e "\n$date\n\n$dist miles in $mins minutes, \nPace: $mpm min/mile\n-------------------\n$notes\n------------------\n" > $filedate.run

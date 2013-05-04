@@ -26,6 +26,22 @@ runlog s searchterm - searches for searchterm in run entries.
 runlog mo YYYYMM - gives a monthly report, total distance, total time, average page, for month YYYYMM (i.e. 201305 = May, 2013)
 runlog h - displays this help message.
 
+
+Dates: 
+use YYYYMMDD, such as 20130504 for May the Fourth, 2013,
+or 201206 for June 2012.
+
+TIMES: IMPORTANT!
+I haven't yet worked in the math to convert min:sec to
+decimal values and back to work with times.
+At this juncture, you will have to stick with decimal values!
+I.E., for 20:20 (twenty minutes, 20 seconds), enter 20.33
+(20 and 1/3 minutes, essentially), or for 20:45, use 20.75 (20
+and 3/4 minutes), etc.
+ALWAYS USE MINUTES, NOT HOURS!
+I know, some of you are running much further than I am, like marathons.
+But if your run is 2 hours long, enter 120 for time. 
+
 This is the initial release, and rather rudimentary.
 Future releases will include monthly reports, giving average distances, pace,
 changes in weight.
