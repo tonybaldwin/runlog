@@ -1,0 +1,34 @@
+runlog.sh - a personal running log keeper in bash
+by tony baldwin 
+released according to GPL v. 3
+http://tonyb.us/runlog
+v. 0.1
+
+Runlog allows you to track the distances, times, and paces, of
+your running workouts, plus, if you choose to install the
+relevant modules, weight, and blood glucose readings (author
+is diabetic). 
+
+Runlog can be used to track cycling, walking, etc., as well,
+I suppose.
+
+Installation: run the install script.
+
+Usage:
+runlog - creates a new runlog entry.
+runlog e filename - opens log entry with filename for editing.
+runlog v filename - opens log entry with filename for viewing.
+runlog d filename - delete runlog file with filename.
+runlog r - reads all entries (cats all files in the dir, pipes to less), can be limited to date parameters
+runlog r yyyymmdd - reads entries from date yyyymmdd. One can specify just yyyymm, or just yyyy, even.
+runlog l - lists all runlog entries. Like r, it can be narrowed down with date parameters.
+runlog s searchterm - searches for searchterm in run entries.
+runlog mo YYYYMM - gives a monthly report, total distance, total time, average page, for month YYYYMM (i.e. 201305 = May, 2013)
+runlog h - displays this help message.
+
+This is the initial release, and rather rudimentary.
+Future releases will include monthly reports, giving average distances, pace,
+changes in weight.
+I will be borrowing code from my own LJobs.sh script (tonyb.us/ljobs)
+and modifying it accordingly, in my copious spare time.
+Bear with me (or hack away and submit a push request!)
