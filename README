@@ -52,8 +52,8 @@ Bear with me (or hack away and submit a push request!)
 FRIENDICA POSTING:
 Runlog comes with an option to post your run logs to your friendica profile,
 and to the @runner group.
-What is friendica? Only THE MOST AWESOMEST free, decentralized, federated social networking
-platform. See http://www.friendica.com
+What is friendica? Only THE MOST AWESOMEST free, decentralized, federated social networking platform. 
+See http://www.friendica.com
 If you really don't want to use that part, and you are annoyed
 by runlog asking if you want to post to friendica upon creation
 of each new entry, you could simply delete those parts of the script,

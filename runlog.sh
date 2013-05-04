@@ -119,6 +119,7 @@ else
 # FRIENDICA PLUGIN START
 # This bit allows one to post to Friendica (see www.friendica.com), and to the @runner group
 # comment out or delete this part if you don't want to use friendica.
+if [[ $fplug = y ]]; then 
 	read -p "Post to my friendica? (y/n) " post
 	if [[ $post = y ]]; then
 		echo -e "@runner #running\nposted with runlog - http://tonyb.us/runlog\n----------------\n" >> ~/.runlog/$filedate.run
@@ -146,7 +147,8 @@ else
 			fi
 		fi
 	fi
-# FRIENDICA PLUGIN START
+fi
+# FRIENDICA PLUGIN END
 fi
 fi
 fi
