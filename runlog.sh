@@ -15,6 +15,7 @@ tday=$(date +%Y%m%d)
 source  ~/.runlog.conf
 cd $rlpath
 
+# read entries
 if [[ $1 = r ]]; then
 	if [[ $2 ]]; then
 		cat $2* | less
@@ -22,6 +23,7 @@ if [[ $1 = r ]]; then
 		for i in $(ls -Rt *.run); do cat $i; done | less
 	fi
 else
+# help
 if [[ $1 = h ]]; then
 	echo "runlog management system by tony baldwin, http://tonyb.us/runlog
 ----------- runlog usage ------------
@@ -39,8 +41,8 @@ DATES: YYYYMMDD means 4 digit year, 2 digit month, 2 digit day.
 This month is $thismonth, Today is $tday.
 -------------------------------------
 runlog is released according to GPL v. 3"
-
 else
+# list entries
 if [[ $1 = l ]]; then
 	if [[ $2 ]]; then
 		ls -1t | grep $2
@@ -48,6 +50,7 @@ if [[ $1 = l ]]; then
 		ls -1t
 	fi
 else
+# delete an entry
 if [[ $1 = d ]]; then
 	read -p "Are you certain you wish to delete $2? " dr
 	if [[ $dr = y ]]; then
@@ -56,15 +59,19 @@ if [[ $1 = d ]]; then
 		exit
 	fi
 else
+# view a single entry
 if [[ $1 = v ]]; then
 	less $2
 else
+# edit an entry
 if [[ $1 = e ]]; then
 	$editor $2
 else
+# search entries
 if [[ $1 = s ]]; then
 	grep -iw $2 *
 else
+#create monthly report
 if [[ $1 = mo ]]; then
 	if [ -e $2.month ]; then
 		read -p "Report exists. View or Recreate? (v/r)" po0p
@@ -104,11 +111,14 @@ else
 	read -p "Time (minutes): " mins
 	read -p "Notes: " notes
 	mpm=`echo "$mins / $dist" | bc -l`
-	echo -e "\n$date\n\n$dist miles in $mins minutes, \nPace: $mpm min/mile\n\n-------------------\n\n$notes\n\n------------------\n" > $filedate.run
+	echo -e "\n$date\n\n$dist miles in $mins minutes, \nPace: $mpm min/mile\n-------------------\n$notes\n------------------\n" > $filedate.run
 	$editor $filedate.run
-	read -p "Post to my free-haven? (y/n) " post
+# FRIENDICA PLUGIN START
+# This bit allows one to post to Friendica (see www.friendica.com), and to the @runner group
+# comment out or delete this part if you don't want to use friendica.
+	read -p "Post to my friendica? (y/n) " post
 	if [[ $post = y ]]; then
-		echo -e "\n@runner #running\nposted with runlog - http://tonyb.us/runlog\n----------------\n" >> ~/.runlog/$filedate.run
+		echo -e "@runner #running\nposted with runlog - http://tonyb.us/runlog\n----------------\n" >> ~/.runlog/$filedate.run
 		ud="$(cat ~/.runlog/$filedate.run)"
 		title="Tony's Runlog"
 		echo "would you like to crosspost to "
@@ -133,6 +143,7 @@ else
 			fi
 		fi
 	fi
+# FRIENDICA PLUGIN START
 fi
 fi
 fi
