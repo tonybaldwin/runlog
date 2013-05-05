@@ -5,14 +5,17 @@ http://tonyb.us/runlog
 v. 0.1
 
 Runlog allows you to track the distances, times, and paces, of
-your running workouts, plus, if you choose to install the
-relevant modules, weight, and blood glucose readings (author
-is diabetic). 
+your running workouts. 
+I found that there are practically no options for training logs
+or workout tracking for users of Free Software and GNU/Linux.
+Well, now there's one.
 
 Runlog can be used to track cycling, walking, etc., as well,
 I suppose.
 
 Installation: run the install script.
+It moves stuff into place, creates a config file.
+Easy-peasy.
 
 Usage:
 runlog - creates a new runlog entry.
@@ -67,6 +70,10 @@ Runlog comes with an option to post your run logs to your friendica profile,
 and to the @runner group.
 What is friendica? Only THE MOST AWESOMEST free, decentralized, federated social networking platform. 
 See http://www.friendica.com
+
+TODO:
+Considering adding weight tracking, calorie tracking, possibley blood glucose tracking (author is diabetic).
+Also considering a possible gui version.
 
 ./tony
 http://www.tonybaldwin.me
