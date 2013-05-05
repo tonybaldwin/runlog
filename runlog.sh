@@ -111,7 +111,7 @@ if [[ $1 = mo ]]; then
 		avpsex=`echo "$ttime / $tdist" | bc -l`
 		avpmins=`date -d "1970-1-1 0:00 +$avpsex seconds" "+%M:%S"`
 		avdist=`echo "$tdist/$noruns" | bc -l`
-		echo "---- Monthly Run Report $2 ----" > $2.month
+		echo "---- $uname's Monthly Run Report $2 ----" > $2.month
 		echo "Total workouts = $noruns
 Total Distance = $tdist
 Total Time = $tmins
@@ -155,7 +155,7 @@ if [[ $1 = yr ]]; then
 		avpsex=`echo "$ttime / $tdist" | bc -l`
 		avpmins=`date -d "1970-1-1 0:00 +$avpsex seconds" "+%M:%S"`
 		avdist=`echo "$tdist/$noruns" | bc -l`
-		echo "---- Yearly Run Report $2 ----" > $2.year
+		echo "---- $uname's Yearly Run Report $2 ----" > $2.year
 		echo "Total workouts = $noruns
 Total Distance = $tdist
 Total Time = $tmins
