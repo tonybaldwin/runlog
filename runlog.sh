@@ -39,9 +39,9 @@ runlog mo yyyymm - gives a monthly report for month yyyymm
 runlog h - displays this help message.
 DATES: YYYYMMDD means 4 digit year, 2 digit month, 2 digit day.
 This month is $thismonth, Today is $tday.
-TIMES: At this point, the math isn't here to convert seconds/decimals.
-Either enter full minutes, or use a decimal value (i.e. for 30min45secs, use 30.75, NOT 30:45).
-It's on my todo list...
+TIMES: Enter time, including hours HH:MM:SS, even if you are doing short runs, under an hour.
+i.e. for a 23minute 15second run: 00:23:15
+Otherwise the math will be all wrong.
 -------------------------------------
 runlog is released according to GPL v. 3"
 else
