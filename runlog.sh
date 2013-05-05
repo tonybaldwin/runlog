@@ -85,8 +85,6 @@ if [[ $1 = mo ]]; then
 		if [ $po0p = v ] ; then 
 			cat $2.month
 			exit
-		else
-			mv $2.month $2.month.bak
 		fi
 	fi
 		ttime=0
@@ -116,7 +114,7 @@ if [[ $1 = mo ]]; then
 Total Distance = $tdist
 Total Time = $tmins
 Average Distance = $avdist
-Average Pace = $avpmins mins/mile" >> $2.month
+Average Pace = $avpmins mins/$dunit" >> $2.month
 		rm $2.distance
 		rm $2.time
 		cat $2.month
@@ -129,8 +127,6 @@ if [[ $1 = yr ]]; then
 		if [ $po0p = v ] ; then 
 			cat $2.year
 			exit
-		else
-			mv $2.year $2.year.bak
 		fi
 	fi
 		ttime=0
@@ -160,20 +156,20 @@ if [[ $1 = yr ]]; then
 Total Distance = $tdist
 Total Time = $tmins
 Average Distance = $avdist
-Average Pace = $avpmins mins/mile" >> $2.year
+Average Pace = $avpmins mins/$dunit" >> $2.year
 		rm $2.distance
 		rm $2.time
 		cat $2.year
 		exit
 else
 	date=`date`
-	read -p "Distance (miles):  " dist
+	read -p "Distance ($dunit):  " dist
 	read -p "Time (HH:MM:SS, include hours, even if 00): " rtime
 	read -p "Notes: " notes
 	timsex=`echo "$rtime" | awk -F: '{ print ($1*3600) + ($2*60) + $3 }'`
 	pacesex=`echo "$timsex/$dist" | bc -l`
 	pacemin=`date -d "1970-1-1 0:00 +$pacesex seconds" "+%M:%S"`
-	echo -e "\n$date\n\nDistance: $dist miles \nTime $rtime \nPace: $pacemin min/mile\n-------------------\n$notes\n------------------\n" > $filedate.run
+	echo -e "\n$date\n\nDistance: $dist $dunit \nTime $rtime \nPace: $pacemin min/$dunit\n-------------------\n$notes\n------------------\n" > $filedate.run
 	$editor $filedate.run
 # FRIENDICA PLUGIN START
 # This bit allows one to post to Friendica (see www.friendica.com), and to the @runner group

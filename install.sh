@@ -23,6 +23,7 @@ chmod +x $HOME/bin/runlog
 echo "Creating config files ... "
 echo "# runlog config " > $HOME/.runlog.conf
 read -p "Enter your name: " uname
+read -p "Preferred distance unit (miles, km): " dunit
 read -p "Where do you wish to keep your runlog files? (default ~/.runlog/ If you choose another directory, do not forget trailing slash.): " rlpath
 read -p "What is your prefered editor? (default /usr/bin/vim): " editor
 echo "uname=$uname" >> $HOME/.runlog.conf
