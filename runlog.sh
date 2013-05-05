@@ -155,7 +155,7 @@ if [[ $1 = yr ]]; then
 		avpsex=`echo "$ttime / $tdist" | bc -l`
 		avpmins=`date -d "1970-1-1 0:00 +$avpsex seconds" "+%M:%S"`
 		avdist=`echo "$tdist/$noruns" | bc -l`
-		echo "---- yearly Run Report $2 ----" > $2.year
+		echo "---- Yearly Run Report $2 ----" > $2.year
 		echo "Total workouts = $noruns
 Total Distance = $tdist
 Total Time = $tmins
@@ -184,7 +184,7 @@ if [[ $fplug = y ]]; then
 	if [[ $post = y ]]; then
 		echo -e "@runner #running\nposted with runlog - http://tonyb.us/runlog\n----------------\n" >> ~/.runlog/$filedate.run
 		ud="$(cat ~/.runlog/$filedate.run)"
-		title="Tony's Runlog"
+		title="$uname's Runlog"
 		echo "would you like to crosspost to "
 		read -p "statusnet? " snet
 		read -p "twitter? " twit
@@ -193,7 +193,6 @@ if [[ $fplug = y ]]; then
 		read -p "livejournal? " lj
 		read -p "insanejournal?" ij
 		read -p "tumblr? " tum
-		read -p "posterous? " pos
 		read -p "wordpress? " wp 
 		read -p "libertree? " lt
 		if [[ $(curl --ssl -u $fuser:$fpass -d "status=$ud&title=$title&ljpost_enable=$lj&ijpost_enable=$ij&posterous_enable=$pos&dwpost_enable=$dw&wppost_enable=$wp&tumblr_enable=$tum&facebook_enable=$fb&twitter_enable=$twit&libertree_enable=$lt:65&statusnet_enable=$snet&source=runlog.sh" $fsite/api/statuses/update.xml | grep error) ]]; then
