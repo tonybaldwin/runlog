@@ -36,12 +36,16 @@ runlog r yyyymmdd - reads entries from date yyyymmdd. One can specify just yyyym
 runlog l - lists all runlog entries. Like r, it can be narrowed down with date parameters.
 runlog s searchterm - searches for searchterm in run entries.
 runlog mo yyyymm - gives a monthly report for month yyyymm 
+runlog yr yyyy - gives a yearly report for year yyyy (such as runlog yr 2013)
 runlog h - displays this help message.
 DATES: YYYYMMDD means 4 digit year, 2 digit month, 2 digit day.
 This month is $thismonth, Today is $tday.
 TIMES: Enter time, including hours HH:MM:SS, even if you are doing short runs, under an hour.
 i.e. for a 23minute 15second run: 00:23:15
 Otherwise the math will be all wrong.
+REPORTS: yearly and monthly reports will give you data for
+Total no. of workouts, total distance, total time, average distance, average page
+for the time period in question, to date.
 -------------------------------------
 runlog is released according to GPL v. 3"
 else
@@ -87,6 +91,8 @@ if [[ $1 = mo ]]; then
 	fi
 		ttime=0
 		tdist=0
+		noruns=0
+		for i in $(ls $2*.run); do noruns=$((noruns+1)); done
 		for di in $(ls $2*.run); do
 		grep Distance $di | awk '{ print $2 }' >> $2.distance
 		done
@@ -104,13 +110,60 @@ if [[ $1 = mo ]]; then
 		done
 		avpsex=`echo "$ttime / $tdist" | bc -l`
 		avpmins=`date -d "1970-1-1 0:00 +$avpsex seconds" "+%M:%S"`
+		avdist=`echo "$tdist/$noruns" | bc -l`
 		echo "---- Monthly Run Report $2 ----" > $2.month
-		echo "Total Distance = $tdist
+		echo "Total workouts = $noruns
+Total Distance = $tdist
 Total Time = $tmins
+Average Distance = $avdist
 Average Pace = $avpmins mins/mile" >> $2.month
 		rm $2.distance
 		rm $2.time
 		cat $2.month
+		exit
+else
+#create yearly report
+if [[ $1 = yr ]]; then
+	if [ -e $2.year ]; then
+		read -p "Report exists. View or Recreate? (v/r)" po0p
+		if [ $po0p = v ] ; then 
+			cat $2.year
+			exit
+		else
+			mv $2.year $2.year.bak
+		fi
+	fi
+		ttime=0
+		tdist=0
+		noruns=0
+		for i in $(ls $2*.run); do noruns=$((noruns+1)); done
+		for di in $(ls $2*.run); do
+		grep Distance $di | awk '{ print $2 }' >> $2.distance
+		done
+		for dis in $(cat $2.distance); do
+		tdist=`echo "$tdist+$dis" | bc`
+		done
+		for ti in $(ls $2*.run); do
+		rtime=`grep Time $ti | awk '{ print $2 }'`
+		timesex=`echo "$rtime" | awk -F: '{ print ($1*3600) +($2*60) + $3 }'`
+		echo $timesex >> $2.time
+		done
+		for tim in $(cat $2.time); do
+		ttime=`echo "$ttime+$tim" | bc -l`
+		tmins=`date -d "1970-1-1 0:00 +$ttime.00 seconds" "+%H:%M:%S"`
+		done
+		avpsex=`echo "$ttime / $tdist" | bc -l`
+		avpmins=`date -d "1970-1-1 0:00 +$avpsex seconds" "+%M:%S"`
+		avdist=`echo "$tdist/$noruns" | bc -l`
+		echo "---- yearly Run Report $2 ----" > $2.year
+		echo "Total workouts = $noruns
+Total Distance = $tdist
+Total Time = $tmins
+Average Distance = $avdist
+Average Pace = $avpmins mins/mile" >> $2.year
+		rm $2.distance
+		rm $2.time
+		cat $2.year
 		exit
 else
 	date=`date`
@@ -156,6 +209,7 @@ if [[ $fplug = y ]]; then
 	fi
 fi
 # FRIENDICA PLUGIN END
+fi
 fi
 fi
 fi

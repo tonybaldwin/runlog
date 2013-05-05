@@ -23,9 +23,23 @@ runlog r - reads all entries (cats all files in the dir, pipes to less), can be 
 runlog r yyyymmdd - reads entries from date yyyymmdd. One can specify just yyyymm, or just yyyy, even.
 runlog l - lists all runlog entries. Like r, it can be narrowed down with date parameters.
 runlog s searchterm - searches for searchterm in run entries.
-runlog mo YYYYMM - gives a monthly report, total distance, total time, average page, for month YYYYMM (i.e. 201305 = May, 2013)
+runlog mo yyyymm - gives a monthly report for month yyyymm 
+runlog yr yyyy - gives a yearly report for year yyyy (such as runlog yr 2013)
 runlog h - displays this help message.
 
+REPORTS: 
+Yearly and monthly reports will give statistics for
+Total no. of workouts
+Total distance
+Total time
+Average distance/workout
+Average pace
+for the time period chosen, to date.
+You can run a yearly report at any point in the year,
+of course, and receive data up to that point for the year.
+Likewise for a month.
+You can run the report again, later, and receive updated
+data, of course.
 
 Dates: 
 use YYYYMMDD, such as 20130504 for May the Fourth, 2013,
