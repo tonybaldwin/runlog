@@ -59,10 +59,6 @@ I rarely run over an hour, myself, but want to accomodate those who do,
 so, the full time parameter is required for the math to work properly.
 
 This is the initial release, and rather rudimentary.
-Future releases will include monthly reports, giving average distances, pace,
-changes in weight.
-I will be borrowing code from my own LJobs.sh script (tonyb.us/ljobs)
-and modifying it accordingly, in my copious spare time.
 Bear with me (or hack away and submit a push request!)
 
 FRIENDICA POSTING:
