@@ -94,16 +94,20 @@ if [[ $1 = mo ]]; then
 		tdist=`echo "$tdist+$dis" | bc`
 		done
 		for ti in $(ls $2*.run); do
-		grep Time $ti | awk '{ print $2 }' >> $2.time
+		rtime=`grep Time $ti | awk '{ print $2 }'`
+		timesex=`echo "$rtime" | awk -F: '{ print ($1*3600) +($2*60) + $3 }'`
+		echo $timesex >> $2.time
 		done
 		for tim in $(cat $2.time); do
-		ttime=`echo "$ttime+$tim" | bc`
+		ttime=`echo "$ttime+$tim" | bc -l`
+		tmins=`date -d "1970-1-1 0:00 +$ttime.00 seconds" "+%H:%M:%S"`
 		done
-		avp=`echo "$ttime / $tdist" | bc`
+		avpsex=`echo "$ttime / $tdist" | bc -l`
+		avpmins=`date -d "1970-1-1 0:00 +$avpsex seconds" "+%M:%S"`
 		echo "---- Monthly Run Report $2 ----" > $2.month
 		echo "Total Distance = $tdist
-Total Time = $ttime
-Average Pace = $avp mins/mile" >> $2.month
+Total Time = $tmins
+Average Pace = $avpmins mins/mile" >> $2.month
 		rm $2.distance
 		rm $2.time
 		cat $2.month
@@ -111,14 +115,17 @@ Average Pace = $avp mins/mile" >> $2.month
 else
 	date=`date`
 	read -p "Distance (miles):  " dist
-	read -p "Time (minutes, decimal values ok, no seconds, i.e. 20:45 = 20.75): " mins
+	read -p "Time (HH:MM:SS, include hours, even if 00): " rtime
 	read -p "Notes: " notes
-	mpm=`echo "$mins / $dist" | bc -l`
-	echo -e "\n$date\n\n$dist miles in $mins minutes, \nPace: $mpm min/mile\n-------------------\n$notes\n------------------\n" > $filedate.run
+	timsex=`echo "$rtime" | awk -F: '{ print ($1*3600) + ($2*60) + $3 }'`
+	pacesex=`echo "$timsex/$dist" | bc -l`
+	pacemin=`date -d "1970-1-1 0:00 +$pacesex seconds" "+%M:%S"`
+	echo -e "\n$date\n\nDistance: $dist miles \nTime $rtime \nPace: $pacemin min/mile\n-------------------\n$notes\n------------------\n" > $filedate.run
 	$editor $filedate.run
 # FRIENDICA PLUGIN START
 # This bit allows one to post to Friendica (see www.friendica.com), and to the @runner group
-# comment out or delete this part if you don't want to use friendica.
+# Only implemented if the $fplug value in ~/.runlog.conf = y
+# and, of course, the proper friendica parameters (user:pass, site.url) are present in same .conf file
 if [[ $fplug = y ]]; then 
 	read -p "Post to my friendica? (y/n) " post
 	if [[ $post = y ]]; then
