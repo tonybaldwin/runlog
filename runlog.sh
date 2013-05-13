@@ -167,11 +167,14 @@ else
 	date=`date`
 	read -p "Distance ($dunit):  " dist
 	read -p "Time (HH:MM:SS, include hours, even if 00): " rtime
+	read -p "Weight: " weight
 	read -p "Notes: " notes
 	timsex=`echo "$rtime" | awk -F: '{ print ($1*3600) + ($2*60) + $3 }'`
 	pacesex=`echo "$timsex/$dist" | bc -l`
+	wchange=`echo "$weight - $sweight" | bc -l`
+	calsburned=`echo "0.7568 * $weight * $dist" | bc -l`
 	pacemin=`date -d "1970-1-1 0:00 +$pacesex seconds" "+%M:%S"`
-	echo -e "\n$date\n\nDistance: $dist $dunit \nTime $rtime \nPace: $pacemin min/$dunit\n-------------------\n$notes\n------------------\n" > $filedate.run
+	echo -e "\n$date\n\nDistance: $dist $dunit \nTime $rtime \nPace: $pacemin min/$dunit\nWeight: $weight ($wchange from initial $sweight)\nCalories: $calsburned\n-------------------\n$notes\n------------------\n" > $filedate.run
 	$editor $filedate.run
 # FRIENDICA PLUGIN START
 # This bit allows one to post to Friendica (see www.friendica.com), and to the @runner group
@@ -180,7 +183,7 @@ else
 if [[ $fplug = y ]]; then 
 	read -p "Post to my friendica? (y/n) " post
 	if [[ $post = y ]]; then
-		echo -e "@runner #running\nposted with runlog - http://tonyb.us/runlog\n----------------\n" >> ~/.runlog/$filedate.run
+		echo -e "@runner #running\nposted with runlog - http://tonyb.us/runlog\n----------------\n" >> $rlpath/$filedate.run
 		ud="$(cat ~/.runlog/$filedate.run)"
 		title="$uname's Runlog"
 		echo "would you like to crosspost to "
@@ -193,7 +196,7 @@ if [[ $fplug = y ]]; then
 		read -p "tumblr? " tum
 		read -p "wordpress? " wp 
 		read -p "libertree? " lt
-		if [[ $(curl --ssl -u $fuser:$fpass -d "status=$ud&title=$title&ljpost_enable=$lj&ijpost_enable=$ij&posterous_enable=$pos&dwpost_enable=$dw&wppost_enable=$wp&tumblr_enable=$tum&facebook_enable=$fb&twitter_enable=$twit&libertree_enable=$lt:65&statusnet_enable=$snet&source=runlog.sh" $fsite/api/statuses/update.xml | grep error) ]]; then
+		if [[ $(curl -k -u $fuser:$fpass -d "status=$ud&title=$title&ljpost_enable=$lj&ijpost_enable=$ij&dwpost_enable=$dw&wppost_enable=$wp&tumblr_enable=$tum&facebook_enable=$fb&twitter_enable=$twit&libertree_enable=$lt:65&statusnet_enable=$snet&source=runlog.sh" $fsite/api/statuses/update.xml | grep error) ]]; then
 			echo "Error!"
 			exit
 		else 
