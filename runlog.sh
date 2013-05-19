@@ -181,22 +181,28 @@ else
 # Only implemented if the $fplug value in ~/.runlog.conf = y
 # and, of course, the proper friendica parameters (user:pass, site.url) are present in same .conf file
 if [[ $fplug = y ]]; then 
-	read -p "Post to my friendica? (y/n) " post
+# initializing some variables for xposting.
+let snet=twit=fb=dw=lj=ij=tum=wp=lt=pp=0
+	read -p "Post to Friendica? (y/n) " post
 	if [[ $post = y ]]; then
 		echo -e "@runner #running\nposted with runlog - http://tonyb.us/runlog\n----------------\n" >> $rlpath/$filedate.run
-		ud="$(cat ~/.runlog/$filedate.run)"
+		ud="$(cat $rlpath/$filedate.run)"
 		title="$uname's Runlog"
-		echo "would you like to crosspost to "
-		read -p "statusnet? " snet
-		read -p "twitter? " twit
-		read -p "facebook? " fb
-		read -p "dreamwidth?  " dw
-		read -p "livejournal? " lj
-		read -p "insanejournal?" ij
-		read -p "tumblr? " tum
-		read -p "wordpress? " wp 
-		read -p "libertree? " lt
-		if [[ $(curl -k -u $fuser:$fpass -d "status=$ud&title=$title&ljpost_enable=$lj&ijpost_enable=$ij&dwpost_enable=$dw&wppost_enable=$wp&tumblr_enable=$tum&facebook_enable=$fb&twitter_enable=$twit&libertree_enable=$lt:65&statusnet_enable=$snet&source=runlog.sh" $fsite/api/statuses/update.xml | grep error) ]]; then
+		read -p "Will you be crossposting to other networks? (y/n) " xpo
+		if [[ $xpo == y ]]; then
+			echo "For each of the following, if you wish to xpost to the network, enter 1:"
+			read -p "statusnet? " snet
+			read -p "twitter? " twit
+			read -p "facebook? " fb
+			read -p "dreamwidth?  " dw
+			read -p "livejournal? " lj
+			read -p "insanejournal?" ij
+			read -p "tumblr? " tum
+			read -p "wordpress? " wp 
+			read -p "libertree? " lt
+			read -p "pumpio?  " pp
+		fi
+		if [[ $(curl -k -u $fuser:$fpass -d "status=$ud&title=$title&ljpost_enable=$lj&ijpost_enable=$ij&dwpost_enable=$dw&wppost_enable=$wp&tumblr_enable=$tum&facebook_enable=$fb&twitter_enable=$twit&libertree_enable=$lt:65&statusnet_enable=$snet&pumpio_enable=$pp&source=runlog.sh" $fsite/api/statuses/update.xml | grep error) ]]; then
 			echo "Error!"
 			exit
 		else 
