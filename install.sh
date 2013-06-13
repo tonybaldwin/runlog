@@ -26,9 +26,11 @@ read -p "Enter your name: " uname
 read -p "Preferred distance unit (miles, km): " dunit
 read -p "Where do you wish to keep your runlog files? (default ~/.runlog/ If you choose another directory, do not forget trailing slash.): " rlpath
 read -p "What is your prefered editor? (default /usr/bin/vim): " editor
+read -p "What is your prefered web browser? (i.e. /usr/bin/iceweasel) " browser
 echo "uname=$uname" >> $HOME/.runlog.conf
 echo "rlpath=$rlpath" >> $HOME/.runlog.conf
 echo "editor=$editor" >> $HOME/.runlog.conf
+echo "browser=$browser" >> $HOME/.runlog.conf
 
 read -p "Will you use the friendica plugin? (y/n)" fplug
 if [[ $fplug = y ]]; then

@@ -104,6 +104,7 @@ if [[ $1 = mo ]]; then
 		done
 		for tim in $(cat $2.time); do
 		ttime=`echo "$ttime+$tim" | bc -l`
+		ttime=`printf %0.f $ttime`
 		tmins=`date -d "1970-1-1 0:00 +$ttime.00 seconds" "+%H:%M:%S"`
 		done
 		avpsex=`echo "$ttime / $tdist" | bc -l`
@@ -147,6 +148,7 @@ if [[ $1 = yr ]]; then
 		done
 		for tim in $(cat $2.time); do
 		ttime=`echo "$ttime+$tim" | bc -l`
+		ttime=`printf %0.f $ttime`
 		tmins=`date -d "1970-1-1 0:00 +$ttime.00 seconds" "+%H:%M:%S"`
 		done
 		avpsex=`echo "$ttime / $tdist" | bc -l`
@@ -209,7 +211,7 @@ let snet=twit=fb=dw=lj=ij=tum=wp=lt=pp=0
 			echo "Success!"
 		read -p "Shall we have a look in your a browser now? (y/n): " op
 			if [ $op = "y" ]; then
-			xdg-open $fsite/u/$fuser
+			 $browser $fsite/u/$fuser
 			fi
 		fi
 	fi
