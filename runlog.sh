@@ -175,8 +175,9 @@ else
 	pacesex=`echo "$timsex/$dist" | bc -l`
 	wchange=`echo "$weight - $sweight" | bc -l`
 	calsburned=`echo "0.7568 * $weight * $dist" | bc -l`
+	calsrounded=`printf "%0.f\n" $calsburned`
 	pacemin=`date -d "1970-1-1 0:00 +$pacesex seconds" "+%M:%S"`
-	echo -e "\n$date\n\nDistance: $dist $dunit \nTime $rtime \nPace: $pacemin min/$dunit\nWeight: $weight ($wchange from initial $sweight)\nCalories: $calsburned\n-------------------\n$notes\n------------------\n" > $filedate.run
+	echo -e "\n$date\n\nDistance: $dist $dunit \nTime $rtime \nPace: $pacemin min/$dunit\nWeight: $weight ($wchange from initial $sweight)\nCalories: $calsrounded\n-------------------\n$notes\n------------------\n" > $filedate.run
 	$editor $filedate.run
 # FRIENDICA PLUGIN START
 # This bit allows one to post to Friendica (see www.friendica.com), and to the @runner group
