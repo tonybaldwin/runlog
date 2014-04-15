@@ -38,6 +38,8 @@ runlog s searchterm - searches for searchterm in run entries.
 runlog mo yyyymm - gives a monthly report for month yyyymm 
 runlog yr yyyy - gives a yearly report for year yyyy (such as runlog yr 2013)
 runlog h - displays this help message.
+runlog ns - add a new shoe.
+runlog sc - check shoe mileage (sc for shoe check)
 DATES: YYYYMMDD means 4 digit year, 2 digit month, 2 digit day.
 This month is $thismonth, Today is $tday.
 TIMES: Enter time, including hours HH:MM:SS, even if you are doing short runs, under an hour.
@@ -65,6 +67,18 @@ if [[ $1 = d ]]; then
 	else
 		exit
 	fi
+else
+# add new shoe
+if [[ $1 = ns ]]; then 
+	read -p "Name of shoe (no spaces): " nushoe
+	touch $nushoe.shoe
+else
+#shoe check
+if [[ $1 = sc ]]; then
+	for s in $(ls *.shoe); do
+		d=$(cat $s)
+		echo "$s distance $d"
+	done
 else
 # view a single entry
 if [[ $1 = v ]]; then
@@ -167,12 +181,14 @@ Average Pace = $avpmins mins/$dunit
 		rm $2.time
 		cat $2.year
 		exit
+#create new runlog entry
 else
 	date=`date`
 	read -p "Distance ($dunit):  " dist
 	read -p "Time (HH:MM:SS, include hours, even if 00): " rtime
 	read -p "Weight: " weight
 	read -p "Notes: " notes
+	read -p "Tracking shoe milage? (y/n)" smiles
 	timsex=`echo "$rtime" | awk -F: '{ print ($1*3600) + ($2*60) + $3 }'`
 	pacesex=`echo "$timsex/$dist" | bc -l`
 	wchange=`echo "$weight - $sweight" | bc -l`
@@ -180,6 +196,14 @@ else
 	calsrounded=`printf "%0.f\n" $calsburned`
 	pacemin=`date -d "1970-1-1 0:00 +$pacesex seconds" "+%M:%S"`
 	echo -e "\n$date\n\nDistance: $dist $dunit \nTime $rtime \nPace: $pacemin min/$dunit\nWeight: $weight ($wchange from initial $sweight)\nCalories: $calsrounded\n-------------------\n$notes\n------------------\n" > $filedate.run
+	if [[ $smiles = y ]]; then
+	shoes=$(ls *.shoe)
+	read -p "Which shoe? $shoes " shoe
+	shoedist=$(cat $shoe)
+	nushoedist=`echo "$shoedist + $dist" | bc -l`
+	echo $nushoedist > $shoe
+	echo "$uname has run $nushoedist on $shoe" >> $filedate.run
+	fi
 	$editor $filedate.run
 # FRIENDICA PLUGIN START
 # This bit allows one to post to Friendica (see www.friendica.com), and to the @runner group
@@ -220,6 +244,8 @@ let snet=twit=fb=dw=lj=ij=tum=wp=lt=pp=0
 	fi
 fi
 # FRIENDICA PLUGIN END
+fi
+fi
 fi
 fi
 fi

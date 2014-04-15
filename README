@@ -61,11 +61,15 @@ so, the full time parameter is required for the math to work properly.
 This is the initial release, and rather rudimentary.
 Bear with me (or hack away and submit a push request!)
 
-FRIENDICA POSTING:
-Runlog comes with an option to post your run logs to your friendica profile,
-and to the @runner group.
-What is friendica? Only THE MOST AWESOMEST free, decentralized, federated social networking platform. 
-See http://www.friendica.com
+REDMATRIX POSTING:
+Runlog comes with an option to post your run logs to your redmatrix channel.
+What is redmatrix? see https://redmatrix.me
+See my runlog channel at https://tonybaldwin.info/channel/runlog
+
+NEW 2014.04.15:
+Track shoe mileage!
+Added a feature where you can track mileage on a pair of shoes.
+It is recommended to replace trainers after 350 to 500 miles.
 
 TODO:
 Considering adding weight tracking, calorie tracking, possibley blood glucose tracking (author is diabetic).
