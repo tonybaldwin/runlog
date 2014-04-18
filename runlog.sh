@@ -202,7 +202,7 @@ else
 	shoedist=$(cat $shoe)
 	nushoedist=`echo "$shoedist + $dist" | bc -l`
 	echo $nushoedist > $shoe
-	echo "$uname has run $nushoedist on $shoe" >> $filedate.run
+	echo "$uname has run $nushoedist miles on $shoe" >> $filedate.run
 	fi
 	$editor $filedate.run
 # FRIENDICA PLUGIN START
