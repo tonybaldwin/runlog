@@ -1,7 +1,7 @@
 runlog.sh - a personal running log keeper in bash
 by tony baldwin 
 released according to GPL v. 3
-http://tonyb.us/runlog
+http://wiki.tonybaldwin.me/doku.php/hax/bash/runlog
 v. 0.1
 
 Runlog allows you to track the distances, times, and paces, of
