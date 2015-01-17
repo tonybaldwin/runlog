@@ -9,7 +9,7 @@
 
 if [ ! -d "$HOME/bin/" ]; then
 	mkdir $HOME/bin/
-	$PATH=$PATH:/$HOME/bin/
+	PATH=$PATH:/$HOME/bin/
 	export PATH
 fi
 
